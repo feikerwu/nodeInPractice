@@ -1,0 +1,17 @@
+{
+  "name": "nodeinpractice",
+  "version": "1.0.0",
+  "description": "node in practice ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "feikerwu@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}

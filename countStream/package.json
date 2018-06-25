@@ -1,0 +1,11 @@
+{
+  "name": "countstream",
+  "version": "1.0.0",
+  "description": "count text which match specific Reg in target file",
+  "main": "index.js",
+  "scripts": {
+    "test": "babel-node test.js"
+  },
+  "author": "feikerwu@gmail.com",
+  "license": "ISC"
+}
