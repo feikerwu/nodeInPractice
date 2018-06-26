@@ -1,4 +1,6 @@
-const { Writable } = require('stream')
+const {
+    Writable
+} = require('stream')
 const path = require('path')
 const fs = require('fs')
 
@@ -8,46 +10,38 @@ const fs = require('fs')
  * @class countStream
  * @extends {Writable}
  */
-export default class countStream extends Writable {
-  constructor(reg, filePath) {
-    this.reg = reg
-    this.filePath = filePath
-    this.count = 0
-    this.validate()
-  }
-
-  write(chuck, encoding, cb) {
-    const matches = chuck.toString().macth(this.reg)
-    if (matches) {
-      this.count += matches.length
+class countStream extends Writable {
+    constructor(reg) {
+        super()
+        this.reg = reg instanceof RegExp ? reg : new RegExp(reg, 'ig')
+        this.count = 0
+        this.validate()
     }
-  }
 
-  end() {
-    this.emit('total', this.count)
-  }
-
-  validate() {
-    try {
-      this.validateReg(this.reg)
-      this.validateFile(this.filePath)
-    } catch (err) {
-      console.error(err)
+    // 重写writable的write函数
+    write(chuck, encoding, cb) {
+        const matches = chuck.toString().match(this.reg)
+        if (matches) {
+            this.count += matches.length
+        }
     }
-  }
 
-  validateReg(reg) {
-    return reg instanceof RegExp ? true : new Error('reg in not a validate RegExp')
-  }
-
-  validateFile(filePath) {
-    const fileStat = fs.statSync(filePath)
-    if (!fileStat.isFile()) {
-      return new Error('file not exited')
+    // 重写wriatble的end函数
+    end() {
+        this.emit('total', this.count)
     }
-    return true
-  }
 
+    validate() {
+        try {
+            this.validateReg(this.reg)
+        } catch (err) {
+
+        }
+    }
+
+    validateReg(reg) {
+        return reg instanceof RegExp ? true : new Error('reg in not a validate RegExp')
+    }
 }
 
-
+module.exports = countStream
